@@ -1,0 +1,12 @@
+{
+  "request": {
+    "urlPattern": "/api/payment-orders/oid_exception([a-z,0-9]*)/refund",
+    "method": "POST"
+  },
+  "response": {
+    "status": 500,
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

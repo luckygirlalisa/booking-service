@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "Running gradlew check before push to remote repository..."
+cd backend
+./gradlew clean check

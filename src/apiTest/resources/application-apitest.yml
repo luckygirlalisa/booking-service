@@ -1,0 +1,3 @@
+integration:
+  paymentService:
+    baseUrl: http://localhost:17999/api

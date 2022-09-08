@@ -1,0 +1,15 @@
+{
+  "request": {
+    "urlPattern": "/api/payment-orders/oid_fail([a-z,0-9]*)/refund",
+    "method": "POST"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "refundStatus": "fail"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
