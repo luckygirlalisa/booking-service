@@ -16,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureDataMongo
 @DirtiesContext
-@EmbeddedKafka(partitions = 1, brokerProperties = ["listeners=PLAINTEXT://localhost:9092", "port=9092"])
 @AutoConfigureWireMock(stubs = ["classpath:/stubs"], port = 17999)
 class ApiTestBase {
     @LocalServerPort

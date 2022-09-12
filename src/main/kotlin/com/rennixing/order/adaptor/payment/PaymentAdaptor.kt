@@ -11,6 +11,7 @@ class PaymentAdaptor(val paymentFeignClient: PaymentFeignClient) {
     val MERCHANT_ID = "merchant-id"
     fun payWithZhifubao(order: Order): PaymentResponseFromZhifubao {
         val result = paymentFeignClient.payWithZhifubao(
+            order.id,
             ZhifubaoPaymentRequestDto(
                 MERCHANT_ID,
                 order.id,

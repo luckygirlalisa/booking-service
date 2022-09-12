@@ -48,39 +48,4 @@ class OrderController(
             HttpStatus.BAD_REQUEST
         )
     }
-//
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    fun createOrder(@RequestBody orderRequestDto: OrderRequestDto): Order {
-//        return orderService.createOrder(orderRequestDto)
-//    }
-//
-//    @GetMapping("/{oid}")
-//    fun getOrderSummary(@PathVariable("oid") orderId: String): ResponseEntity<Order> {
-//        return orderService.getOrderSummary(orderId)?.let {
-//            ResponseEntity(it, HttpStatus.OK)
-//        } ?: ResponseEntity(HttpStatus.NOT_FOUND)
-//    }
-//
-//    @PostMapping("/{oid}/cancellation")
-//    fun cancellation(
-//        @PathVariable("oid") orderId: String,
-//        @RequestBody cancellationRequest: CancellationRequestDto
-//    ): ResponseEntity<CancellationResponseDto> {
-//        return orderService.applyCancellation(orderId, cancellationRequest.createAt)
-//            ?.let {
-//                ResponseEntity(CancellationResponseDto(it), HttpStatus.OK)
-//            } ?: ResponseEntity(HttpStatus.CONFLICT)
-//    }
-//
-//    @PostMapping("/{oid}/cancellation/confirmation")
-//    fun cancellationConfirmation(
-//        @PathVariable("oid") orderId: String,
-//        @RequestBody confirmCancellationRequestDto: ConfirmCancellationRequestDto
-//    ): ResponseEntity<ConfirmCancellationResponseDto> {
-//        return orderService.confirmCancellation(orderId, confirmCancellationRequestDto.fulfilledAt)
-//            ?.let {
-//                ResponseEntity(ConfirmCancellationResponseDto(it), HttpStatus.OK)
-//            } ?: ResponseEntity(HttpStatus.SERVICE_UNAVAILABLE)
-//    }
 }

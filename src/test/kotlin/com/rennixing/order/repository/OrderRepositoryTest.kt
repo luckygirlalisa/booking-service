@@ -71,29 +71,4 @@ internal class OrderRepositoryTest {
         assertNull(foundOrder)
     }
 
-    //
-//    @Test
-//    fun `should retrieve order from database and return retrieved item`() {
-//        val savedOrder = Order(
-//            id = "orderId",
-//            userId = "userId",
-//            merchantId = "merchantId",
-//            orderItems = listOf(
-//                OrderItem(productId = "product1", price = 15.0, minutesToPrepare = 40),
-//                OrderItem(productId = "product2", price = 5.0, minutesToPrepare = 10)
-//            )
-//        )
-//        mongoTemplate.save(savedOrder)
-//
-//        val found = orderRepository.findById("orderId")
-//        assertEquals(savedOrder.id, found!!.id)
-//        assertEquals(savedOrder.userId, found.userId)
-//        assertEquals(savedOrder.merchantId, found.merchantId)
-//        assertEquals(OrderState.CREATED, found.state)
-//    }
-
-//    @Test
-//    fun `should return null given order not exist in database`() {
-//        assertNull(orderRepository.findById("orderIdNotExist"))
-//    }
 }

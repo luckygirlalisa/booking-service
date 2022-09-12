@@ -30,7 +30,7 @@ internal class PaymentAdaptorTest {
         val order = Order("123", "abc", 22.00, null)
 
         every {
-            paymentFeignClient.payWithZhifubao(any())
+            paymentFeignClient.payWithZhifubao(order.id, any())
         } returns ZhifubaoPaymentResponseDto(PaymentStatus.SUCCESS)
 
         val paymentResult = paymentAdaptor.payWithZhifubao(order)

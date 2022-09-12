@@ -1,12 +1,12 @@
 {
   "request": {
-    "urlPattern": "/api/payment-orders/oid_success([a-z,0-9]*)/refund",
+    "urlPattern": "/api/payment-orders/orderWaitingForPayment/",
     "method": "POST"
   },
   "response": {
     "status": 200,
     "jsonBody": {
-      "refundStatus": "success"
+      "paymentStatus": "SUCCESS"
     },
     "headers": {
       "Content-Type": "application/json"

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service
 @Service
 class OrderService(
     private val orderRepository: OrderRepository,
-//    private val paymentFeignClient: PaymentFeignClient,
-//    private val messageProducer: MessageProducer
 ) {
 
     fun findOrder(oid: String): Order {
@@ -23,37 +21,4 @@ class OrderService(
         orderRepository.save(order)
         return paymentResponseFromZhifubao.paymentStatus
     }
-
-//    fun createOrder(orderRequestDto: OrderRequestDto): Order {
-//        return orderRepository.save(Order(orderRequestDto))
-//    }
-//
-//    fun getOrderSummary(orderId: String): Order? {
-//        return orderRepository.findById(orderId)
-//    }
-//
-//    fun applyCancellation(orderId: String, createAt: String): String? {
-//        val order = orderRepository.findById(orderId)
-//        val fulfilmentExpireAt = order?.applyCancellation(createAt)
-//
-//        return fulfilmentExpireAt?.also {
-//            orderRepository.save(order)
-//        }
-//    }
-//
-//    fun confirmCancellation(orderId: String, fulfilledAt: String): String? {
-//        val order = orderRepository.findById(orderId)
-//        val fulfilmentExpireAt = order?.confirmCancellation(fulfilledAt)
-//
-//        return fulfilmentExpireAt?.let {
-//            val refundResult = paymentFeignClient.refundPayOrder(order.paymentFulfilment!!.payOrderId!!)
-//            if (refundResult.refundStatus == "success") {
-//                orderRepository.save(order)
-//                messageProducer.sendReturnRedPacketMessage(order.paymentFulfilment!!.redPacketId!!)
-//                fulfilmentExpireAt
-//            } else {
-//                null
-//            }
-//        }
-//    }
 }
