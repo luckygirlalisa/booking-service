@@ -22,12 +22,6 @@ internal class OrderServiceTest {
     @MockK
     private lateinit var orderRepository: OrderRepository
 
-//    @MockK(relaxed = true)
-//    private lateinit var messageProducer: MessageProducer
-//
-//    @MockK
-//    private lateinit var paymentFeignClient: PaymentFeignClient
-
     private lateinit var orderService: OrderService
 
     @BeforeEach

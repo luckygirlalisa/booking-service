@@ -63,6 +63,8 @@ dependencies {
     configurations.compile {
         exclude("org.springframework.boot", "spring-boot-starter-logging")
     }
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.kafka:spring-kafka-test:2.7.6")
     testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:3.0.3")

@@ -23,7 +23,7 @@ internal class OrderRepositoryTest {
     private lateinit var orderRepository: OrderRepository
 
     @Test
-    fun `should save order to database and return saved item`() {
+    fun shouldSaveOrderWithPaymentFulfilmentSuccessful() {
         val savedOrder = Order(
             id = "orderId",
             userId = "userId",
@@ -65,7 +65,7 @@ internal class OrderRepositoryTest {
 
     @Test
     internal fun shouldReturnNullWhenOrderNotFound() {
-        val orderId = "orderId"
+        val orderId = "not-exist-orderId"
         val foundOrder = orderRepository.findById(orderId)
 
         assertNull(foundOrder)
@@ -92,8 +92,8 @@ internal class OrderRepositoryTest {
 //        assertEquals(OrderState.CREATED, found.state)
 //    }
 
-    @Test
-    fun `should return null given order not exist in database`() {
-        assertNull(orderRepository.findById("orderIdNotExist"))
-    }
+//    @Test
+//    fun `should return null given order not exist in database`() {
+//        assertNull(orderRepository.findById("orderIdNotExist"))
+//    }
 }
