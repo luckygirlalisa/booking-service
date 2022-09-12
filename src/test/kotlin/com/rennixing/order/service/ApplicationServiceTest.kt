@@ -62,4 +62,19 @@ internal class ApplicationServiceTest {
             )
         }
     }
+
+    @Test
+    internal fun shouldThrowExceptionWhenConnectingToZhifubaoError() {
+        val oid = "123"
+        val order = Order(oid, "userId", 12.00, null)
+        every { orderService.findOrder(oid) } returns order
+        every { paymentAdaptor.payWithZhifubao(order = order) } throws ZhifubaoConnectionException("Timeout when connecting to Zhifubao")
+
+        assertThrows<ZhifubaoConnectionException> {
+            applicationService.pay(
+                oid,
+                orderPaymentConfirmationRequestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO)
+            )
+        }
+    }
 }

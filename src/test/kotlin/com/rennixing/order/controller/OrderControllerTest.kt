@@ -8,6 +8,7 @@ import com.rennixing.order.controller.dto.PaymentStatus
 import com.rennixing.order.controller.dto.PaymentType
 import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.exception.PaymentTypeNotAcceptableException
+import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.service.ApplicationService
 import io.mockk.every
 import org.junit.jupiter.api.BeforeEach
@@ -92,6 +93,26 @@ internal class OrderControllerTest {
             }
             .andExpect {
                 status { isBadRequest() }
+            }
+    }
+
+    @Test
+    internal fun shouldReturn500WhenConnectingZhifubaoFailed() {
+        // given
+        val requestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO);
+        val requestString = objectMapper.writeValueAsString(requestDto)
+        val message = "Connecting to Zhifubao failed."
+        every { applicationService.pay(orderId = "123", any()) } throws ZhifubaoConnectionException(message)
+
+        mockMvc
+            .post("/travel-booking-orders/123/payment/confirmation") {
+                contentType = MediaType.APPLICATION_JSON
+                content = requestString
+            }
+            .andExpect {
+                status { isInternalServerError() }
+                jsonPath("$.paymentStatus") { value("FAILED") }
+                jsonPath("$.errorMessage") { value(message) }
             }
     }
 

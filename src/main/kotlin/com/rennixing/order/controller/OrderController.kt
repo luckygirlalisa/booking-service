@@ -5,6 +5,7 @@ import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
 import com.rennixing.order.controller.dto.PaymentStatus
 import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.exception.PaymentTypeNotAcceptableException
+import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.service.ApplicationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -28,6 +29,11 @@ class OrderController(
             return ResponseEntity(
                 PaymentConfirmationResponseDto(PaymentStatus.FAILED, exception.message),
                 HttpStatus.NOT_FOUND
+            )
+        } catch (exception: ZhifubaoConnectionException) {
+            return ResponseEntity(
+                PaymentConfirmationResponseDto(PaymentStatus.FAILED, exception.message),
+                HttpStatus.INTERNAL_SERVER_ERROR
             )
         }
         return ResponseEntity(PaymentConfirmationResponseDto(PaymentStatus.SUCCESS, null), HttpStatus.OK)
