@@ -7,7 +7,6 @@ import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
 import com.rennixing.order.controller.dto.PaymentStatus
 import com.rennixing.order.controller.dto.PaymentType
 import com.rennixing.order.exception.OrderNotFoundException
-import com.rennixing.order.exception.PaymentTypeNotAcceptableException
 import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.service.ApplicationService
 import io.mockk.every
@@ -83,16 +82,16 @@ internal class OrderControllerTest {
     @Test
     internal fun shouldReturn400WhenPaymentTypeNotAccepted() {
         val requestString = "{\"paymentType\":\"credit-card\"}"
-        val message = "Payment type credit-card not acceptable"
-        every { applicationService.pay(orderId = "123", any()) } throws PaymentTypeNotAcceptableException(message)
-
-        mockMvc
+        val response = mockMvc
             .post("/travel-booking-orders/123/payment/confirmation") {
                 contentType = MediaType.APPLICATION_JSON
                 content = requestString
             }
+        response
             .andExpect {
                 status { isBadRequest() }
+                jsonPath("$.paymentStatus") { value("FAILED") }
+                jsonPath("$.errorMessage") { prefix("Cannot deserialize value of type `com.rennixing.order.controller.dto.PaymentType` from String") }
             }
     }
 

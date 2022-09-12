@@ -58,9 +58,9 @@ internal class OrderRepositoryTest {
         val foundOrder = orderRepository.findById(orderId)
 
         assertEquals(existingOrder.id, foundOrder!!.id)
-        assertEquals(existingOrder.userId, foundOrder!!.userId)
-        assertEquals(existingOrder.price, foundOrder!!.price)
-        assertEquals(existingOrder.paymentFulfillment!!.amount, foundOrder!!.paymentFulfillment!!.amount)
+        assertEquals(existingOrder.userId, foundOrder.userId)
+        assertEquals(existingOrder.price, foundOrder.price)
+        assertEquals(existingOrder.paymentFulfillment!!.amount, foundOrder.paymentFulfillment!!.amount)
     }
 
     @Test
