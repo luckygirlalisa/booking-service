@@ -21,7 +21,7 @@ internal class OrderPaymentApiTest : ApiTestBase() {
 
     @Test
     fun shouldPayOrderSuccessful() {
-        val requestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO);
+        val requestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO)
         val requestString = objectMapper.writeValueAsString(requestDto)
 
         RestAssured

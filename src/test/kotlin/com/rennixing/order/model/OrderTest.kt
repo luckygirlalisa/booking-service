@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
-internal class OrderTest{
+internal class OrderTest {
     @Test
     internal fun shouldFulfillPayment() {
         val toBePaidOrder = Order("123", "abc", 12.00, null)

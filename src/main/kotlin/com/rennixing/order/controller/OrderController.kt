@@ -9,7 +9,13 @@ import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.service.ApplicationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 
 @RestController
@@ -20,8 +26,9 @@ class OrderController(
 
     @PostMapping("/{oid}/payment/confirmation")
     @ResponseStatus(HttpStatus.CREATED)
-    fun pay(@PathVariable("oid") orderId: String,
-            @RequestBody orderPaymentRequestDto: OrderPaymentConfirmationRequestDto
+    fun pay(
+        @PathVariable("oid") orderId: String,
+        @RequestBody orderPaymentRequestDto: OrderPaymentConfirmationRequestDto
     ): ResponseEntity<PaymentConfirmationResponseDto> {
         try {
             applicationService.pay(orderId, orderPaymentRequestDto)
@@ -40,9 +47,7 @@ class OrderController(
     }
 
     @ExceptionHandler(InvalidFormatException::class)
-    fun handleConstraintViolation(
-        ex: InvalidFormatException, request: WebRequest?
-    ): ResponseEntity<Any?>? {
+    fun handleConstraintViolation(ex: InvalidFormatException, request: WebRequest?): ResponseEntity<Any?>? {
         return ResponseEntity(
             PaymentConfirmationResponseDto(PaymentStatus.FAILED, ex.message),
             HttpStatus.BAD_REQUEST

@@ -19,5 +19,4 @@ class ApplicationService(private val orderService: OrderService, private val pay
 
         return PaymentConfirmationResponseDto(paymentStatus, null)
     }
-
 }

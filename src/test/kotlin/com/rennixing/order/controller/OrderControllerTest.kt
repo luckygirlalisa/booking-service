@@ -41,7 +41,7 @@ internal class OrderControllerTest {
     @Test
     fun shouldPayOrderSuccessfulWithCorrectInput() {
         // given
-        val requestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO);
+        val requestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO)
         val requestString = objectMapper.writeValueAsString(requestDto)
         every { applicationService.pay(orderId = "123", any()) } returns
             PaymentConfirmationResponseDto(PaymentStatus.SUCCESS, null)
@@ -61,7 +61,7 @@ internal class OrderControllerTest {
 
     @Test
     internal fun shouldReturn404WhenOrderNotFoundWithPassedId() {
-        val orderPaymentConfirmationRequestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO);
+        val orderPaymentConfirmationRequestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO)
         val orderId = "not-existing-order-id"
         val errorMessage = "Order with id $orderId not found"
         every { applicationService.pay(orderId, any()) } throws OrderNotFoundException(errorMessage)
@@ -98,7 +98,7 @@ internal class OrderControllerTest {
     @Test
     internal fun shouldReturn500WhenConnectingZhifubaoFailed() {
         // given
-        val requestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO);
+        val requestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO)
         val requestString = objectMapper.writeValueAsString(requestDto)
         val message = "Connecting to Zhifubao failed."
         every { applicationService.pay(orderId = "123", any()) } throws ZhifubaoConnectionException(message)

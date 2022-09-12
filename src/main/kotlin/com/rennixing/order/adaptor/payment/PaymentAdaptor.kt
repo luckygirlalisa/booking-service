@@ -5,7 +5,6 @@ import com.rennixing.order.adaptor.apiclient.dto.ZhifubaoPaymentRequestDto
 import com.rennixing.order.model.Order
 import org.springframework.stereotype.Component
 
-
 @Component
 class PaymentAdaptor(val paymentFeignClient: PaymentFeignClient) {
     val MERCHANT_ID = "merchant-id"
@@ -54,11 +53,11 @@ class PaymentAdaptor(val paymentFeignClient: PaymentFeignClient) {
 //
 //    internal class LongRunningTask : Runnable {
 //        override fun run() {
-////            for (i in 0 until Long.MAX_VALUE) {
-////                if (Thread.interrupted()) {
-////                    return
-////                }
-////            }
+//            for (i in 0 until Long.MAX_VALUE) {
+//                if (Thread.interrupted()) {
+//                    return
+//                }
+//            }
 //
 //        }
 //    }

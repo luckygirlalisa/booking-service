@@ -2,7 +2,6 @@ package com.rennixing.order.adaptor.apiclient
 
 import com.rennixing.order.adaptor.apiclient.dto.ZhifubaoPaymentRequestDto
 import com.rennixing.order.adaptor.apiclient.dto.ZhifubaoPaymentResponseDto
-import feign.Body
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,5 +17,8 @@ interface PaymentFeignClient {
         method = [RequestMethod.POST],
         value = ["/payment-orders/{oid}/"]
     )
-    fun payWithZhifubao(@PathVariable oid: String, @RequestBody requestDto: ZhifubaoPaymentRequestDto) : ZhifubaoPaymentResponseDto?
+    fun payWithZhifubao(
+        @PathVariable oid: String,
+        @RequestBody requestDto: ZhifubaoPaymentRequestDto
+    ): ZhifubaoPaymentResponseDto?
 }

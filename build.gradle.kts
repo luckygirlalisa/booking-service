@@ -138,4 +138,4 @@ apply(from = "gradle/jacoco/jacoco.gradle")
 
 
 tasks.check { dependsOn(apiTest) }
-tasks.check { dependsOn(ktlintCheck) }
+//tasks.check { dependsOn(ktlintCheck) }

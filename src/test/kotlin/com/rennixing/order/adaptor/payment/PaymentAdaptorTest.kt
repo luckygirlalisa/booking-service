@@ -3,7 +3,6 @@ package com.rennixing.order.adaptor.payment
 import com.rennixing.order.adaptor.apiclient.PaymentFeignClient
 import com.rennixing.order.adaptor.apiclient.dto.ZhifubaoPaymentResponseDto
 import com.rennixing.order.controller.dto.PaymentStatus
-import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.model.Order
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -11,7 +10,6 @@ import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
