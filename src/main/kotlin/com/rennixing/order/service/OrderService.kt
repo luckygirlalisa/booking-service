@@ -4,6 +4,7 @@ import com.rennixing.order.adaptor.apiclient.PaymentFeignClient
 import com.rennixing.order.adaptor.kafka.MessageProducer
 import com.rennixing.order.adaptor.payment.PaymentResponseFromZhifubao
 import com.rennixing.order.controller.dto.PaymentStatus
+import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.model.Order
 import com.rennixing.order.repository.OrderRepository
 import org.springframework.stereotype.Service
@@ -11,16 +12,18 @@ import org.springframework.stereotype.Service
 @Service
 class OrderService(
     private val orderRepository: OrderRepository,
-    private val paymentFeignClient: PaymentFeignClient,
-    private val messageProducer: MessageProducer
+//    private val paymentFeignClient: PaymentFeignClient,
+//    private val messageProducer: MessageProducer
 ) {
 
     fun findOrder(oid: String): Order {
-        TODO("Not yet implemented")
+        return orderRepository.findById(oid) ?: throw OrderNotFoundException()
     }
 
-    fun pay(paymentResponseFromZhifubao: PaymentResponseFromZhifubao) : PaymentStatus{
-        TODO("Not yet implemented")
+    fun pay(order: Order, paymentResponseFromZhifubao: PaymentResponseFromZhifubao): PaymentStatus {
+        order.applyPayment()
+        orderRepository.save(order)
+        return paymentResponseFromZhifubao.paymentStatus
     }
 
 //    fun createOrder(orderRequestDto: OrderRequestDto): Order {

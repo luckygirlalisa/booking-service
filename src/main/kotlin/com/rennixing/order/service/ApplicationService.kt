@@ -15,7 +15,7 @@ class ApplicationService(private val orderService: OrderService, private val pay
 
         val paymentResultFromZhifubao = paymentAdaptor.payWithZhifubao(order)
 
-        val paymentStatus = orderService.pay(paymentResultFromZhifubao)
+        val paymentStatus = orderService.pay(order, paymentResultFromZhifubao)
 
         return PaymentConfirmationResponseDto(paymentStatus, null)
     }

@@ -34,11 +34,11 @@ internal class ApplicationServiceTest {
     @Test
     internal fun shouldPayOrderSuccessFulWithCorrectInput() {
         val oid = "123"
-        val order = Order("123", "userId")
+        val order = Order("123", "userId", 12.00, null)
         every { orderService.findOrder(oid) } returns order
         val paymentResponseFromZhifubao = PaymentResponseFromZhifubao(PaymentStatus.SUCCESS)
         every { paymentAdaptor.payWithZhifubao(order) } returns paymentResponseFromZhifubao
-        every { orderService.pay(paymentResponseFromZhifubao) } returns PaymentStatus.SUCCESS
+        every { orderService.pay(order, paymentResponseFromZhifubao) } returns PaymentStatus.SUCCESS
 
         val paymentResult = applicationService.pay(oid, OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO))
 

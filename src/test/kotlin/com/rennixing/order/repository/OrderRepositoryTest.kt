@@ -26,6 +26,8 @@ internal class OrderRepositoryTest {
         val savedOrder = Order(
             id = "orderId",
             userId = "userId",
+            price = 12.00,
+            paymentFulfillment = null,
 //            merchantId = "merchantId",
 //            orderItems = listOf(
 //                OrderItem(productId = "product1", price = 15.0, minutesToPrepare = 30),

@@ -2,12 +2,15 @@ package com.rennixing.order.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.time.LocalDateTime
 
 @Document(collection = "order")
 class Order(
     @Id
     val id: String,
     val userId: String,
+    val price: Double,
+    var paymentFulfillment: PaymentFulfillment?,
 //    val merchantId: String,
 //    val orderItems: List<OrderItem>,
 //    var state: OrderState = OrderState.CREATED,
@@ -16,6 +19,9 @@ class Order(
 //    var prepareMealFulfilment: PrepareMealFulfilment? = null,
 //    var orderCancellationFulfilment: OrderCancellationFulfilment? = null
 ) {
+    fun applyPayment() {
+        paymentFulfillment = PaymentFulfillment(LocalDateTime.now().toString(), price)
+    }
 //    constructor(orderRequestDto: OrderRequestDto) : this(
 //        id = ObjectId().toString(),
 //        userId = orderRequestDto.userId,
@@ -60,14 +66,19 @@ class Order(
 //    }
 }
 
-class PaymentFulfilment(
+class PaymentFulfillment(
     val createAt: String,
-    val expireAt: String,
-    val amount: Double,
-    var fulfilledAt: String? = null,
-    var payOrderId: String? = null,
-    var redPacketId: String? = null,
+    var amount: Double
 )
+
+//class PaymentFulfilment(
+//    val createAt: String,
+//    val expireAt: String,
+//    val amount: Double,
+//    var fulfilledAt: String? = null,
+//    var payOrderId: String? = null,
+//    var redPacketId: String? = null,
+//)
 
 class OrderAcceptFulfilment(
     val createAt: String,

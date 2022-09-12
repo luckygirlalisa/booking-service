@@ -5,6 +5,8 @@ import com.rennixing.order.model.Order
 val orderStillInPrepPeriod = Order(
     id = "orderStillInPrepPeriod",
     userId = "userId",
+    price = 12.00,
+    paymentFulfillment = null,
 //    merchantId = "merchantId",
 //    orderItems = listOf(
 //        OrderItem(productId = "product1", price = 10.0, minutesToPrepare = 30)
