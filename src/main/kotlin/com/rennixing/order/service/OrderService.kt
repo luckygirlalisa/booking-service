@@ -1,7 +1,5 @@
 package com.rennixing.order.service
 
-import com.rennixing.order.adaptor.apiclient.PaymentFeignClient
-import com.rennixing.order.adaptor.kafka.MessageProducer
 import com.rennixing.order.adaptor.payment.PaymentResponseFromZhifubao
 import com.rennixing.order.controller.dto.PaymentStatus
 import com.rennixing.order.exception.OrderNotFoundException
@@ -17,7 +15,7 @@ class OrderService(
 ) {
 
     fun findOrder(oid: String): Order {
-        return orderRepository.findById(oid) ?: throw OrderNotFoundException()
+        return orderRepository.findById(oid) ?: throw OrderNotFoundException("Order with id $oid not found")
     }
 
     fun pay(order: Order, paymentResponseFromZhifubao: PaymentResponseFromZhifubao): PaymentStatus {

@@ -63,6 +63,14 @@ internal class OrderRepositoryTest {
         assertEquals(existingOrder.paymentFulfillment!!.amount, foundOrder!!.paymentFulfillment!!.amount)
     }
 
+    @Test
+    internal fun shouldReturnNullWhenOrderNotFound() {
+        val orderId = "orderId"
+        val foundOrder = orderRepository.findById(orderId)
+
+        assertNull(foundOrder)
+    }
+
     //
 //    @Test
 //    fun `should retrieve order from database and return retrieved item`() {

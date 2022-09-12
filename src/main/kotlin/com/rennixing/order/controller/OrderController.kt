@@ -2,24 +2,35 @@ package com.rennixing.order.controller
 
 import com.rennixing.order.controller.dto.OrderPaymentConfirmationRequestDto
 import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
+import com.rennixing.order.controller.dto.PaymentStatus
+import com.rennixing.order.exception.OrderNotFoundException
+import com.rennixing.order.exception.PaymentTypeNotAcceptableException
 import com.rennixing.order.service.ApplicationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.ExceptionHandler
 
 @RestController
 @RequestMapping("/travel-booking-orders")
 class OrderController(
-//    private val orderService: OrderService
     private val applicationService: ApplicationService
 ) {
 
-    @PostMapping
+    @PostMapping("/{oid}/payment/confirmation")
     @ResponseStatus(HttpStatus.CREATED)
     fun pay(@PathVariable("oid") orderId: String,
-            @RequestBody orderPaymentRequestDto: OrderPaymentConfirmationRequestDto): ResponseEntity<PaymentConfirmationResponseDto> {
-        val paymentResponse = applicationService.pay(orderId, orderPaymentRequestDto)
-        return ResponseEntity(paymentResponse, HttpStatus.OK)
+            @RequestBody orderPaymentRequestDto: OrderPaymentConfirmationRequestDto
+    ): ResponseEntity<PaymentConfirmationResponseDto> {
+        try {
+            applicationService.pay(orderId, orderPaymentRequestDto)
+        } catch (exception: OrderNotFoundException) {
+            return ResponseEntity(
+                PaymentConfirmationResponseDto(PaymentStatus.FAILED, exception.message),
+                HttpStatus.NOT_FOUND
+            )
+        }
+        return ResponseEntity(PaymentConfirmationResponseDto(PaymentStatus.SUCCESS, null), HttpStatus.OK)
     }
 //
 //    @PostMapping

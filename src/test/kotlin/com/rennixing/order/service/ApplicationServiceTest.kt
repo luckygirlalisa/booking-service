@@ -6,6 +6,8 @@ import com.rennixing.order.controller.dto.OrderPaymentConfirmationRequestDto
 import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
 import com.rennixing.order.controller.dto.PaymentStatus
 import com.rennixing.order.controller.dto.PaymentType
+import com.rennixing.order.exception.OrderNotFoundException
+import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.model.Order
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
@@ -45,5 +48,18 @@ internal class ApplicationServiceTest {
         val expectedResult = PaymentConfirmationResponseDto(PaymentStatus.SUCCESS, null)
         assertEquals(paymentResult.paymentStatus, expectedResult.paymentStatus)
         assertNull(paymentResult.errorMessage)
+    }
+
+    @Test
+    internal fun shouldThrowExceptionWhenOrderNotFound() {
+        val orderId = "not-existing-order-id"
+        every { orderService.findOrder(orderId) } throws OrderNotFoundException("Order with id $orderId not found.")
+
+        assertThrows<OrderNotFoundException> {
+            applicationService.pay(
+                orderId,
+                orderPaymentConfirmationRequestDto = OrderPaymentConfirmationRequestDto(PaymentType.ZHIFUBAO)
+            )
+        }
     }
 }
