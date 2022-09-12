@@ -33,7 +33,9 @@ internal class OrderRepositoryTest {
                 createAt = "2021-09-11T23:38:00",
                 amount = 10.0,
             ),
-            ticketType = TicketType.AIR
+            ticketType = TicketType.AIR,
+            null,
+            null
         )
 
         val result = orderRepository.save(savedOrder)
@@ -54,7 +56,9 @@ internal class OrderRepositoryTest {
                 createAt = "2021-09-11T23:38:00",
                 amount = 10.0,
             ),
-            ticketType = TicketType.AIR
+            ticketType = TicketType.AIR,
+            null,
+            null
         )
         orderRepository.save(existingOrder)
 

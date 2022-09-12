@@ -10,6 +10,7 @@ import com.rennixing.order.exception.InvalidTicketTypeForCancellationException
 import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.model.Order
+import com.rennixing.order.model.TicketCancellationFulfillment
 import com.rennixing.order.model.TicketType
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -42,7 +43,7 @@ internal class ApplicationServiceTest {
     @Test
     internal fun shouldPayOrderSuccessFulWithCorrectInput() {
         val oid = "123"
-        val order = Order("123", "userId", 12.00, null, TicketType.AIR)
+        val order = Order("123", "userId", 12.00, null, TicketType.AIR,null, null)
         every { orderService.findOrder(oid) } returns order
         val paymentResponseFromZhifubao = PaymentResponseFromZhifubao(PaymentStatus.SUCCESS)
         every { paymentAdaptor.payWithZhifubao(order) } returns paymentResponseFromZhifubao
@@ -71,7 +72,7 @@ internal class ApplicationServiceTest {
     @Test
     internal fun shouldThrowExceptionWhenConnectingToZhifubaoError() {
         val oid = "123"
-        val order = Order(oid, "userId", 12.00, null, TicketType.AIR)
+        val order = Order(oid, "userId", 12.00, null, TicketType.AIR, null, null)
         every { orderService.findOrder(oid) } returns order
         every { paymentAdaptor.payWithZhifubao(order = order) } throws ZhifubaoConnectionException("Timeout when connecting to Zhifubao")
 
@@ -86,7 +87,7 @@ internal class ApplicationServiceTest {
     @Test
     internal fun shouldCancelTicketSuccessfulWithCorrectInput() {
         val oid = "123"
-        val order = Order("123", "userId", 12.00, null, TicketType.AIR)
+        val order = Order("123", "userId", 12.00, null, TicketType.AIR,null, null)
         every { orderService.findOrder(oid) } returns order
         val ticketCancelResponseFrom3rdParty = TicketCancelResponseFrom3rdParty(TicketCancellationStatus.SUCCESS)
         every { bookingAdaptor.cancelTicket(order) } returns ticketCancelResponseFrom3rdParty
@@ -116,7 +117,7 @@ internal class ApplicationServiceTest {
     @Test
     internal fun shouldThrowInvalidTicketTypeForCancellation() {
         val oid = "123"
-        val order = Order("123", "userId", 12.00, null, TicketType.HOTEL)
+        val order = Order("123", "userId", 12.00, null, TicketType.HOTEL,null, null)
         every { orderService.findOrder(oid) } returns order
 
         assertThrows<InvalidTicketTypeForCancellationException> { applicationService.cancelTicket(oid) }
@@ -125,7 +126,7 @@ internal class ApplicationServiceTest {
     @Test
     internal fun shouldReturnTicketCancellationSuccessWhenConnectionFailedWith3rdParty() {
         val oid = "123"
-        val order = Order("123", "userId", 12.00, null, TicketType.AIR)
+        val order = Order("123", "userId", 12.00, null, TicketType.AIR,null, null)
         every { orderService.findOrder(oid) } returns order
         every { bookingAdaptor.cancelTicket(order) } throws AirTicketBookingSystemConenctionException()
         every {

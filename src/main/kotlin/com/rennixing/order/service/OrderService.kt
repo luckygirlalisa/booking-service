@@ -25,6 +25,12 @@ class OrderService(
     }
 
     fun cancelTicket(order: Order, ticketCancelResponseFrom3rdParty: TicketCancelResponseFrom3rdParty?) : TicketCancellationStatus {
-        TODO("Not yet implemented")
+        if (ticketCancelResponseFrom3rdParty != null && ticketCancelResponseFrom3rdParty.cancellationStatus != TicketCancellationStatus.FAILED){
+            order.confirmTicketCancellation()
+        } else {
+            order.ticketCancellationFailed()
+        }
+        orderRepository.save(order)
+        return TicketCancellationStatus.SUCCESS
     }
 }

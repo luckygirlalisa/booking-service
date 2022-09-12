@@ -44,8 +44,7 @@ class ApplicationService(
 
         val cancelTicketStatus = orderService.cancelTicket(order, cancelTicketResponse)
 
-        return TicketCancelConfirmationResponseDto(
-            cancelTicketStatus,
-            cancelTicketResponse?.let { null } ?: AirTicketBookingSystemConenctionException().message)
+        val message = if (cancelTicketResponse == null) AirTicketBookingSystemConenctionException().message else null
+        return TicketCancelConfirmationResponseDto(cancelTicketStatus, message)
     }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 internal class OrderTest {
     @Test
     internal fun shouldFulfillPayment() {
-        val toBePaidOrder = Order("123", "abc", 12.00, null, TicketType.AIR)
+        val toBePaidOrder = Order("123", "abc", 12.00, null, TicketType.AIR, null, null)
 
         toBePaidOrder.applyPayment()
 

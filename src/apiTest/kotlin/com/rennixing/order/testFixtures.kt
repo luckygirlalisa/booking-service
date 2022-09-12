@@ -12,5 +12,7 @@ val orderWaitingForPayment = Order(
         createAt = "2021-09-11T23:38:00",
         amount = 22.00
     ),
-    ticketType = TicketType.AIR
+    ticketType = TicketType.AIR,
+    ticketCancellationStatus = null,
+    ticketCancellationFulfillment = null
 )
