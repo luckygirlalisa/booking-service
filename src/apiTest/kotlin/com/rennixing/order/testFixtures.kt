@@ -2,6 +2,7 @@ package com.rennixing.order
 
 import com.rennixing.order.model.Order
 import com.rennixing.order.model.PaymentFulfillment
+import com.rennixing.order.model.TicketType
 
 val orderWaitingForPayment = Order(
     id = "orderWaitingForPayment",
@@ -10,5 +11,6 @@ val orderWaitingForPayment = Order(
     paymentFulfillment = PaymentFulfillment(
         createAt = "2021-09-11T23:38:00",
         amount = 22.00
-    )
+    ),
+    ticketType = TicketType.AIR
 )

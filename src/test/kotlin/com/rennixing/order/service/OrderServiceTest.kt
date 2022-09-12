@@ -4,6 +4,7 @@ import com.rennixing.order.adaptor.payment.PaymentResponseFromZhifubao
 import com.rennixing.order.controller.dto.PaymentStatus
 import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.model.Order
+import com.rennixing.order.model.TicketType
 import com.rennixing.order.repository.OrderRepository
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -33,7 +34,7 @@ internal class OrderServiceTest {
     internal fun shouldReturnOrderInfoSuccessfulWithExistOrderId() {
         val orderId = "123"
         val userId = "abc"
-        val order = Order(orderId, userId, 12.00, paymentFulfillment = null)
+        val order = Order(orderId, userId, 12.00, paymentFulfillment = null, TicketType.AIR)
         every {
             orderRepository.findById(orderId)
         } returns order
@@ -56,7 +57,7 @@ internal class OrderServiceTest {
     internal fun shouldCreatePaymentFulfillmentSuccessForExistingOrder() {
         val orderId = "123"
         val userId = "abc"
-        val order = Order(orderId, userId, price = 12.00, paymentFulfillment = null)
+        val order = Order(orderId, userId, price = 12.00, paymentFulfillment = null, TicketType.AIR)
         every { orderRepository.save(order) } returns order
 
         val paymentStatus = orderService.pay(order, PaymentResponseFromZhifubao(PaymentStatus.SUCCESS))

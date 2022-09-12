@@ -11,6 +11,7 @@ class Order(
     val userId: String,
     val price: Double,
     var paymentFulfillment: PaymentFulfillment?,
+    val ticketType: TicketType,
 ) {
     fun applyPayment() {
         paymentFulfillment = PaymentFulfillment(LocalDateTime.now().toString(), price)

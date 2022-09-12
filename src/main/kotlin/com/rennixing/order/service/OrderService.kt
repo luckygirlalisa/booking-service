@@ -1,7 +1,9 @@
 package com.rennixing.order.service
 
+import com.rennixing.order.adaptor.booking.TicketCancelResponseFrom3rdParty
 import com.rennixing.order.adaptor.payment.PaymentResponseFromZhifubao
 import com.rennixing.order.controller.dto.PaymentStatus
+import com.rennixing.order.controller.dto.TicketCancellationStatus
 import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.model.Order
 import com.rennixing.order.repository.OrderRepository
@@ -20,5 +22,9 @@ class OrderService(
         order.applyPayment()
         orderRepository.save(order)
         return paymentResponseFromZhifubao.paymentStatus
+    }
+
+    fun cancelTicket(order: Order, ticketCancelResponseFrom3rdParty: TicketCancelResponseFrom3rdParty?) : TicketCancellationStatus {
+        TODO("Not yet implemented")
     }
 }

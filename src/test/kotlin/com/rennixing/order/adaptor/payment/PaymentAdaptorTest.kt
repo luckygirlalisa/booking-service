@@ -4,6 +4,7 @@ import com.rennixing.order.adaptor.apiclient.PaymentFeignClient
 import com.rennixing.order.adaptor.apiclient.dto.ZhifubaoPaymentResponseDto
 import com.rennixing.order.controller.dto.PaymentStatus
 import com.rennixing.order.model.Order
+import com.rennixing.order.model.TicketType
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -25,7 +26,7 @@ internal class PaymentAdaptorTest {
 
     @Test
     internal fun shouldPaySuccessWithFeignClient() {
-        val order = Order("123", "abc", 22.00, null)
+        val order = Order("123", "abc", 22.00, null, TicketType.AIR)
 
         every {
             paymentFeignClient.payWithZhifubao(order.id, any())
