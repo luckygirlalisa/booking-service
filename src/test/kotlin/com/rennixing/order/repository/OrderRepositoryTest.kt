@@ -1,6 +1,7 @@
 package com.rennixing.order.repository
 
 import com.rennixing.order.model.Order
+import com.rennixing.order.model.PaymentFulfillment
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -27,29 +28,42 @@ internal class OrderRepositoryTest {
             id = "orderId",
             userId = "userId",
             price = 12.00,
-            paymentFulfillment = null,
-//            merchantId = "merchantId",
-//            orderItems = listOf(
-//                OrderItem(productId = "product1", price = 15.0, minutesToPrepare = 30),
-//            ),
-//            state = OrderState.ACCEPTED,
-//            paymentFulfilment = PaymentFulfilment(
-//                createAt = "2021-09-11T23:38:00",
-//                expireAt = "2021-09-11T23:43:00",
-//                amount = 10.0,
-//                fulfilledAt = "2021-09-11T23:40:00",
-//                payOrderId = "oid_success123",
-//                redPacketId = "rid"
-//            )
+            paymentFulfillment = PaymentFulfillment(
+                createAt = "2021-09-11T23:38:00",
+                amount = 10.0,
+            )
         )
 
         val result = orderRepository.save(savedOrder)
 
         assertEquals(savedOrder.id, result.id)
         assertEquals(savedOrder.userId, result.userId)
-//        assertEquals(savedOrder.merchantId, result.merchantId)
+        assertEquals(savedOrder.paymentFulfillment, result.paymentFulfillment)
     }
-//
+
+    @Test
+    internal fun shouldFindOrderWithOrderId() {
+        val orderId = "orderId"
+        val existingOrder = Order(
+            id = orderId,
+            userId = "userId",
+            price = 12.00,
+            paymentFulfillment = PaymentFulfillment(
+                createAt = "2021-09-11T23:38:00",
+                amount = 10.0,
+            )
+        )
+        orderRepository.save(existingOrder)
+
+        val foundOrder = orderRepository.findById(orderId)
+
+        assertEquals(existingOrder.id, foundOrder!!.id)
+        assertEquals(existingOrder.userId, foundOrder!!.userId)
+        assertEquals(existingOrder.price, foundOrder!!.price)
+        assertEquals(existingOrder.paymentFulfillment!!.amount, foundOrder!!.paymentFulfillment!!.amount)
+    }
+
+    //
 //    @Test
 //    fun `should retrieve order from database and return retrieved item`() {
 //        val savedOrder = Order(

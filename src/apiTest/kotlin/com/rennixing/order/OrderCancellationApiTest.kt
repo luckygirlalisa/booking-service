@@ -12,13 +12,13 @@ import org.junit.jupiter.api.TestInstance
 internal class OrderCancellationApiTest : ApiTestBase() {
     @BeforeAll
     fun setUpTestData() {
-        mongoTemplate.save(orderStillInPrepPeriod)
-        mongoTemplate.save(orderStillInPrepPeriod2)
-        mongoTemplate.save(orderPendingCancellationConfirmation)
-        mongoTemplate.save(orderPendingCancellationConfirmation2)
-        mongoTemplate.save(orderPendingCancellationConfirmation3)
-        mongoTemplate.save(orderPrepMealFulfilled)
-        mongoTemplate.save(orderPrepMealFulfilled2)
+//        mongoTemplate.save(orderStillInPrepPeriod)
+//        mongoTemplate.save(orderStillInPrepPeriod2)
+//        mongoTemplate.save(orderPendingCancellationConfirmation)
+//        mongoTemplate.save(orderPendingCancellationConfirmation2)
+//        mongoTemplate.save(orderPendingCancellationConfirmation3)
+//        mongoTemplate.save(orderPrepMealFulfilled)
+//        mongoTemplate.save(orderPrepMealFulfilled2)
     }
 
     @Test
