@@ -3,6 +3,7 @@ package com.rennixing.order.service
 import com.rennixing.order.adaptor.payment.PaymentAdaptor
 import com.rennixing.order.controller.dto.OrderPaymentConfirmationRequestDto
 import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
+import com.rennixing.order.controller.dto.TicketCancelConfirmationResponseDto
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,5 +19,9 @@ class ApplicationService(private val orderService: OrderService, private val pay
         val paymentStatus = orderService.pay(order, paymentResultFromZhifubao)
 
         return PaymentConfirmationResponseDto(paymentStatus, null)
+    }
+
+    fun cancelTicket(orderId: String) : TicketCancelConfirmationResponseDto {
+        TODO("Not yet implemented")
     }
 }

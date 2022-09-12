@@ -1,21 +1,14 @@
 package com.rennixing.order.controller
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.rennixing.order.controller.dto.OrderPaymentConfirmationRequestDto
-import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
-import com.rennixing.order.controller.dto.PaymentStatus
+import com.rennixing.order.controller.dto.*
+import com.rennixing.order.exception.InvalidTicketTypeForCancellationException
 import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.service.ApplicationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.WebRequest
 
 @RestController
@@ -51,6 +44,29 @@ class OrderController(
         return ResponseEntity(
             PaymentConfirmationResponseDto(PaymentStatus.FAILED, ex.message),
             HttpStatus.BAD_REQUEST
+        )
+    }
+
+    @PostMapping("/{oid}/ticket/cancellation/confirmation")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun pay(
+        @PathVariable("oid") orderId: String,
+    ): ResponseEntity<TicketCancelConfirmationResponseDto> {
+        try {
+            applicationService.cancelTicket(orderId)
+        } catch (exception: OrderNotFoundException) {
+            return ResponseEntity(
+                TicketCancelConfirmationResponseDto(TicketCancellationStatus.FAILED, exception.message),
+                HttpStatus.NOT_FOUND
+            )
+        } catch (exception: InvalidTicketTypeForCancellationException) {
+            return ResponseEntity(
+                TicketCancelConfirmationResponseDto(TicketCancellationStatus.FAILED, exception.message),
+                HttpStatus.BAD_REQUEST
+            )
+        }
+        return ResponseEntity(
+            TicketCancelConfirmationResponseDto(TicketCancellationStatus.SUCCESS, null), HttpStatus.OK
         )
     }
 }

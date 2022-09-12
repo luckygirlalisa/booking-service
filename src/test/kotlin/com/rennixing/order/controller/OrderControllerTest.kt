@@ -2,10 +2,8 @@ package com.rennixing.order.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
-import com.rennixing.order.controller.dto.OrderPaymentConfirmationRequestDto
-import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
-import com.rennixing.order.controller.dto.PaymentStatus
-import com.rennixing.order.controller.dto.PaymentType
+import com.rennixing.order.controller.dto.*
+import com.rennixing.order.exception.InvalidTicketTypeForCancellationException
 import com.rennixing.order.exception.OrderNotFoundException
 import com.rennixing.order.exception.ZhifubaoConnectionException
 import com.rennixing.order.service.ApplicationService
@@ -114,4 +112,59 @@ internal class OrderControllerTest {
                 jsonPath("$.errorMessage") { value(message) }
             }
     }
+
+    @Test
+    fun shouldCancelTicketSuccessfulWithCorrectInput() {
+        // given
+        every { applicationService.cancelTicket(orderId = "123") } returns
+            TicketCancelConfirmationResponseDto(TicketCancellationStatus.SUCCESS, null)
+
+        // when & then
+        mockMvc
+            .post("/travel-booking-orders/123/ticket/cancellation/confirmation") {
+                contentType = MediaType.APPLICATION_JSON
+            }
+            .andExpect {
+                status { isOk() }
+                jsonPath("$.cancellationStatus") { value("SUCCESS") }
+                jsonPath("$.errorMessage") { value(null) }
+            }
+    }
+
+    @Test
+    fun shouldReturn404WhenCancelTicketSuccessfulWithNotExistOrderId() {
+        // given
+        val orderId = "not-existing"
+        every { applicationService.cancelTicket(orderId) } throws OrderNotFoundException("Order not found with id $orderId")
+
+        // when & then
+        mockMvc
+            .post("/travel-booking-orders/$orderId/ticket/cancellation/confirmation") {
+                contentType = MediaType.APPLICATION_JSON
+            }
+            .andExpect {
+                status { isNotFound() }
+                jsonPath("$.cancellationStatus") { value("FAILED") }
+                jsonPath("$.errorMessage") { value("Order not found with id $orderId") }
+            }
+    }
+
+    @Test
+    fun shouldReturn400WhenTicketTobeCancelledIsNotAirTicket() {
+        // given
+        val orderId = "123"
+        every { applicationService.cancelTicket(orderId) } throws InvalidTicketTypeForCancellationException("This type of ticket can't be cancelled")
+
+        // when & then
+        mockMvc
+            .post("/travel-booking-orders/$orderId/ticket/cancellation/confirmation") {
+                contentType = MediaType.APPLICATION_JSON
+            }
+            .andExpect {
+                status { isBadRequest() }
+                jsonPath("$.cancellationStatus") { value("FAILED") }
+                jsonPath("$.errorMessage") { value("This type of ticket can't be cancelled") }
+            }
+    }
+
 }
