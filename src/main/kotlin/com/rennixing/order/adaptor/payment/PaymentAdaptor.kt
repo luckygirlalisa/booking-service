@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 class PaymentAdaptor {
     fun payWithZhifubao(order: Order): PaymentResponseFromZhifubao {
         TODO("Not yet implemented")
+        //TODO call zhifubao SDK to pay
+        //TODO call zhifubao SDK to decrypt result
     }
 
 }
