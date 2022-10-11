@@ -15,3 +15,11 @@ logging:
 integration:
   paymentService:
     baseUrl: http://localhost:10090/api
+  bookingService:
+    baseUrl: http://localhost:10090/booking
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 60000

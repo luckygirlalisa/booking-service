@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
 @FeignClient(
-    value = "payment-api",
-    url = "\${integration.paymentService.baseUrl}",
+    value = "air-ticket-booking-api",
+    url = "\${integration.bookingService.baseUrl}",
 )
 interface AirTicketBookingFeignClient {
+
     @RequestMapping(
         method = [RequestMethod.POST],
-        value = ["/payment-orders/{oid}/"]
+        value = ["/air-booking/cancel/{oid}/"]
     )
     fun cancelTicket(
         @RequestBody order: Order

@@ -44,7 +44,7 @@ internal class AirTicketBookingAdaptorTest {
 
         every {
             airTicketBookingFeignClient.cancelTicket(order)
-        } throws AirTicketBookingSystemConenctionException()
+        } throws RuntimeException()
 
         assertThrows<AirTicketBookingSystemConenctionException> {
             airTicketBookingAdaptor.cancelTicket(order)
