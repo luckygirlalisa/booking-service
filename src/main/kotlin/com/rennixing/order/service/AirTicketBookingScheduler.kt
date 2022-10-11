@@ -13,7 +13,7 @@ class AirTicketBookingScheduler(
     val orderService: OrderService,
     val airTicketBookingFeignClient: AirTicketBookingFeignClient
 ) {
-    @Scheduled(cron = "0 0 * * ?")
+    @Scheduled(cron = "0 0 * * * *")
     @Retryable(value = [AirTicketBookingSystemConenctionException::class], maxAttempts = 4, backoff = Backoff(delay = 1000))
     fun execute() {
         try {
