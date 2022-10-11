@@ -15,4 +15,8 @@ class OrderRepository(
     fun findById(id: String): Order? {
         return mongoTemplate.findById(id, Order::class.java)
     }
+
+    fun findAll(): List<Order> {
+        return mongoTemplate.findAll(Order::class.java)
+    }
 }

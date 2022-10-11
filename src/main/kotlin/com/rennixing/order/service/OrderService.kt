@@ -33,4 +33,9 @@ class OrderService(
         orderRepository.save(order)
         return TicketCancellationStatus.SUCCESS
     }
+
+    fun findFailedCancellationOrders(): List<Order> {
+        val allOrders = orderRepository.findAll()
+        return allOrders.filter { order -> order.ticketCancellationStatus == TicketCancellationStatus.FAILED }
+    }
 }
