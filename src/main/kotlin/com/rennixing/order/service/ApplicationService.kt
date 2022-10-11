@@ -1,6 +1,6 @@
 package com.rennixing.order.service
 
-import com.rennixing.order.adaptor.booking.BookingAdaptor
+import com.rennixing.order.adaptor.booking.AirTicketBookingAdaptor
 import com.rennixing.order.adaptor.payment.PaymentAdaptor
 import com.rennixing.order.controller.dto.OrderPaymentConfirmationRequestDto
 import com.rennixing.order.controller.dto.PaymentConfirmationResponseDto
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
 class ApplicationService(
     private val orderService: OrderService,
     private val paymentAdaptor: PaymentAdaptor,
-    private val bookingAdaptor: BookingAdaptor
+    private val bookingAdaptor: AirTicketBookingAdaptor
 ) {
     fun pay(
         orderId: String,
